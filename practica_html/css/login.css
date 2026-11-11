@@ -1,0 +1,26 @@
+
+body {
+    background-color: #101018;
+    color: #00ff9c;
+    font-family: 'Courier New', monospace;
+}
+
+h2 {
+    color: #bd00ff;
+    margin-bottom: 30px;
+}
+
+label {
+    color: #ff9d00;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+input {
+    background-color: #101018;
+    border: 1px solid #00bfff;
+    padding: 10px;
+    color: #00ff9c;
+    font-family: 'Courier New', monospace;
+}
+
