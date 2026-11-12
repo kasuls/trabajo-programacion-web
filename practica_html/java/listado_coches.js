@@ -4,78 +4,42 @@ async function cargarCoches() {
 
         const token = localStorage.getItem("token");
 
-        if (!token) {
-            alert("Inicia sesion");
-            window.location.href = "login.html";
-            return;
-        }
-
         const respuesta = await fetch("https://practicaprogramacionweb.duckdns.org/cars", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token
-            }
+            headers: { Authorization: "Bearer " + token }
         });
 
         if (!respuesta.ok) {
             alert("Error al obtener los coches");
-            console.log(respuesta)
             return;
         }
 
-        const datos = await respuesta.json();
-
+        const coches = await respuesta.json();
         const lista = document.getElementById("listaCoches");
         lista.innerHTML = "";
 
-        datos.forEach(function(coche) {
+        coches.forEach(coche => {
+            const fila = lista.insertRow();
 
-            const fila = document.createElement("tr");
+            const posiciones =[coche.name, coche.price, coche.km, coche.description, coche.category, coche.idUser]
 
-            const campos = [
-                coche.name,
-                coche.price + " €",
-                coche.km + " km",
-                coche.description,
-                coche.category,
-                coche.idUser
-            ];
-
-            campos.forEach(function(valor) {
-
-                const celda = document.createElement("td");
-                celda.textContent = valor;
-                fila.appendChild(celda);
-
+            posiciones.forEach(valor => {
+                fila.insertCell().textContent = valor;
             });
 
-            const celdaImagen = document.createElement("td");
+            const celdaImagen = fila.insertCell();
 
             if (coche.image) {
-
-                const imagen = document.createElement("img");
-                imagen.src = coche.image;
-                imagen.alt = "Imagen de " + coche.name;
-                imagen.className = "imagen-coche";
-
-                celdaImagen.appendChild(imagen);
-
-            } else {
-                celdaImagen.textContent = "Sin imagen";
+                const img = document.createElement("img");
+                img.src = coche.image;
+                img.alt = "Imagen de " + coche.name;
+                img.className = "imagen-coche";
+                celdaImagen.appendChild(img);
             }
 
-            fila.appendChild(celdaImagen);
-
-            const celdaEstado = document.createElement("td");
-            celdaEstado.textContent = coche.state;
-            fila.appendChild(celdaEstado);
-
-            lista.appendChild(fila);
-
+            fila.insertCell().textContent = coche.state;
         });
 
     } catch (error) {
-        console.log("Error:", error);
+        console.error("Error:", error);
     }
-
 }

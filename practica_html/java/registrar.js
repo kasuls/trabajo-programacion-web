@@ -1,6 +1,5 @@
 async function registrarUsuario(event) {
 
-    event.preventDefault();
     const usuario = document.getElementById("usuario").value;
     const email = document.getElementById("email").value;
     const latitud = document.getElementById("lat").value;

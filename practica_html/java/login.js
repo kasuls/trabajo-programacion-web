@@ -1,6 +1,5 @@
 async function iniciarSesion(event) {
 
-    event.preventDefault();
     const email = document.getElementById("email").value;
     const contraseña = document.getElementById("contraseña").value;
 
@@ -32,12 +31,9 @@ async function iniciarSesion(event) {
         window.location.href = "coches.html";
 
     } catch (error) {
-
         alert("Error al conectar con el servidor");
         console.log(error);
-
     }
-
 }
 
 document.getElementById("login").addEventListener("submit", iniciarSesion);
