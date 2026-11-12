@@ -17,12 +17,12 @@ async function cargarCoches() {
         const lista = document.getElementById("listaCoches");
         lista.innerHTML = "";
 
-        coches.forEach(coche => {
+        coches.forEach(function(coche) {
             const fila = lista.insertRow();
 
-            const posiciones =[coche.name, coche.price, coche.km, coche.description, coche.category, coche.idUser]
+            const posiciones =[coche.name, coche.price, coche.km, coche.description, coche.category, coche.idUser,coche.state]
 
-            posiciones.forEach(valor => {
+            posiciones.forEach(function(valor) {
                 fila.insertCell().textContent = valor;
             });
 
@@ -35,8 +35,6 @@ async function cargarCoches() {
                 img.className = "imagen-coche";
                 celdaImagen.appendChild(img);
             }
-
-            fila.insertCell().textContent = coche.state;
         });
 
     } catch (error) {

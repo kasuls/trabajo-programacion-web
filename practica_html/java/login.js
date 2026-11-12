@@ -1,5 +1,6 @@
 async function iniciarSesion(event) {
 
+    event.preventDefault();
     const email = document.getElementById("email").value;
     const contraseña = document.getElementById("contraseña").value;
 
