@@ -1,63 +1,51 @@
-const API_URL = "https://practicaprogramacionweb.duckdns.org";
-const formularioRegistro = document.getElementById("registro");
+async function registrarUsuario(event) {
 
-if (formularioRegistro) {
+    event.preventDefault();
+    const usuario = document.getElementById("usuario").value;
+    const email = document.getElementById("email").value;
+    const latitud = document.getElementById("lat").value;
+    const longitud = document.getElementById("alt").value;
+    const contraseña = document.getElementById("contraseña").value;
+    const confirmar = document.getElementById("confirmar").value;
 
-    formularioRegistro.addEventListener("submit", async function(event) {
+    if (contraseña !== confirmar) {
+        alert("Las contraseñas no coinciden");
+        return;
+    }
 
-        event.preventDefault();
+    try {
 
-        const usuario = document.getElementById("usuario").value;
-        const email = document.getElementById("email").value;
-        const latitud = document.getElementById("lat").value;
-        const longitud = document.getElementById("alt").value;
-        const contraseña = document.getElementById("contraseña").value;
-        const confirmar_contraseña = document.getElementById("confirmar").value;
+        const respuesta = await fetch("https://practicaprogramacionweb.duckdns.org/users/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: usuario,
+                email: email,
+                latitude: Number(latitud),
+                longitude: Number(longitud),
+                password: contraseña
+            })
+        });
 
-        if (contraseña !== confirmar_contraseña) {
-            alert("Las contraseñas no coinciden");
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            alert("Error al registrar usuario");
+            console.log(datos);
             return;
         }
 
-        try {
+        alert("¡Usuario registrado correctamente!");
+        window.location.href = "Login.html";
 
-            const respuesta = await fetch(`${API_URL}/users/register`, {
+    } catch (error) {
 
-                method: "POST",
+        alert("Error al conectar con el servidor");
+        console.log(error);
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+    }
 
-                body: JSON.stringify({
-                    username: usuario,
-                    email: email,
-                    latitude: Number(latitud),
-                    longitude: Number(longitud),
-                    password: contraseña
-                })
-
-            });
-
-            const datos = await respuesta.json();
-
-            if (!respuesta.ok) {
-                alert("Error al registrar usuario");
-                console.log(datos);
-                return;
-            }
-
-            alert("¡Usuario registrado correctamente!");
-
-            window.location.href = "Login.html";
-
-        } catch (error) {
-
-            console.error("Error de conexión:", error);
-
-            alert("No se ha podido conectar con el servidor");
-
-        }
-
-    })
 }
+document.getElementById("registro").addEventListener("submit", registrarUsuario);

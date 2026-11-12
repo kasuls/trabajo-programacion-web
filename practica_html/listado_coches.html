@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de coches</title>
+    <link rel="stylesheet" href="css/listado_coches.css">
+
+</head>
+
+<body>
+
+    <h1>Listado de coches</h1>
+
+    <button onclick="cargarCoches()">Cargar coches</button>
+
+    <div class="contenedor">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Kilómetros</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Usuario</th>
+                    <th>Imagen</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody id="listaCoches"></tbody>
+
+        </table>
+
+    </div>
+
+    <script src="java/listado_coches.js"></script>
+
+</body>
+
+</html>

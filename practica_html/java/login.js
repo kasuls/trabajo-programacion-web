@@ -1,46 +1,43 @@
-const API_URL = "https://practicaprogramacionweb.duckdns.org";
-const formularioLogin = document.getElementById("login");
+async function iniciarSesion(event) {
 
-if (formularioLogin) {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+    const contraseña = document.getElementById("contraseña").value;
 
-    formularioLogin.addEventListener("submit", async function(event) {
+    try {
 
-        event.preventDefault();
+        const respuesta = await fetch("https://practicaprogramacionweb.duckdns.org/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: contraseña
+            })
+        });
 
-        const email = document.getElementById("email").value;
-        const contraseña = document.getElementById("contraseña").value;
+        const datos = await respuesta.json();
 
-        try {
-
-            const respuesta = await fetch(`${API_URL}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: contraseña
-                })
-            });
-
-            const datos = await respuesta.json();
-
-            if (!respuesta.ok) {
-                alert("Error al iniciar sesión");
-                console.log(datos)
-                return;
-            }
-
-            localStorage.setItem("token", datos.access_token || datos.token);
-            localStorage.setItem("email", email);
-            alert("¡Inicio de sesión correcto!");
-            window.location.href = "coches.html";
-
-        } catch (error) {
-
-            console.error(error);
-            alert("No se ha podido conectar con el servidor");
-
+        if (!respuesta.ok) {
+            alert("Error al iniciar sesión");
+            console.log(datos);
+            return;
         }
-    })
+
+        localStorage.setItem("token", datos.access_token || datos.token);
+        localStorage.setItem("email", email);
+
+        alert("¡Inicio de sesión correcto!");
+        window.location.href = "coches.html";
+
+    } catch (error) {
+
+        alert("Error al conectar con el servidor");
+        console.log(error);
+
+    }
+
 }
+
+document.getElementById("login").addEventListener("submit", iniciarSesion);
